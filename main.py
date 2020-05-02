@@ -4,9 +4,7 @@
 import codecs
 import sys, os
 import re, string
-from dict_manager import DictManager
-from reader import Reader
-from writer import Writer
+from app.dict_manager import DictManager
 from lxml import html
 import requests
 
