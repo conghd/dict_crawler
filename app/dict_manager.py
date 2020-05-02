@@ -1,7 +1,7 @@
 import calendar
 import time
 import requests, os
-import random
+import random, re
 from parser import Parser
 from writer import Writer
 from reader import Reader
@@ -17,11 +17,15 @@ class DictManager:
     def process(cls, input_filename):
         print("DictManager.process")
         start_time = time.time()
+
+        input_basename = os.path.basename(input_filename)
+        global current_time
         global output_dir
-        output_dir = "%s/%s" % (DictManager.OUTPUT, int(time.time()))
+        current_time = int(time.time())
+        output_dir = "%s/%s-%s" % (DictManager.OUTPUT, current_time, os.path.splitext(input_basename)[0])
 
         os.mkdir(output_dir)
-        output_filename = "%s/output.txt" % output_dir
+        output_filename = "%s/%s-%s" % (output_dir, current_time, input_basename)
         print("Input: %s " % input_filename)
         print("Output: %s" % output_filename)
 
@@ -78,7 +82,7 @@ class DictManager:
             # Key, value
             r = requests.get(key)
             sound_name = key.split("/")[-1]
-            filename = "%s/%s-%s-%s-%s" %(output_dir, self.mid, value, i, sound_name)
+            filename = "%s/%s" % (output_dir, value)
             print(filename)
             with open(filename, "wb") as f:
                 f.write(r.content)
@@ -115,7 +119,7 @@ class DictManager:
 
                     # Definition
                     word.definition = block.definition.strip()
-                    if word.definition[-1] == ':':
+                    if len(word.definition) > 0 and word.definition[-1] == ':':
                         word.definition = word.definition[:-1]
 
                     # Definition
@@ -139,7 +143,10 @@ class DictManager:
 
                     word.pronun_audio_url = entry.head.pronun_audio_url
 
-                    self.sound_dict["%s%s" % (DictManager.BASE_URL, word.pronun_audio_url)] = word.word
+                    audio_filename = "%s-%s%s" % (self.mid, re.sub(r'\s+', '-', word.word), \
+                                                  re.sub(r'\/', '-', word.pronun_audio_url))
+                    word.audio_filename = "%s/%s" % (output_dir, audio_filename)
+                    self.sound_dict["%s%s" % (DictManager.BASE_URL, word.pronun_audio_url)] = audio_filename
 
                     self.words.append(word)
 

@@ -1,0 +1,32 @@
+asteroid
+astronaut
+atmosphere
+cosmos
+crater
+debris
+earth
+exploration
+explorer
+galaxy
+gas
+gravity
+horizon
+launch
+meteor
+moon
+ocean
+orbit
+outer space
+planet
+radiation
+rocket
+satellite
+simulator
+solar system
+space
+spacecraft
+space shuttle
+space station
+surface
+universe
+weightlessness

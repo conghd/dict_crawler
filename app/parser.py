@@ -120,7 +120,7 @@ class Parser:
 
     def parse_block(self, node):
         # Info
-        elements = node.xpath("div[@class='ddef_h']/span[@class='def-info ddef-info']/span")
+        elements = node.xpath(".//div[@class='ddef_h']/span[@class='def-info ddef-info']/span")
         info = ''
         for element in elements:
             html_class = element.get('class')
@@ -132,13 +132,13 @@ class Parser:
                 #print("info: %s" % info)
 
         # Definition
-        elements = node.xpath("div[@class='ddef_h']/div[@class='def ddef_d db']")
+        elements = node.xpath(".//div[@class='ddef_h']/div[@class='def ddef_d db']")
         definition = self.get_text(elements[0]) if (len(elements) > 0) else ''
         #print("definition: %s" % definition)
 
         block = Block(info, definition)
         # Examples
-        elements = node.xpath("div[@class='def-body ddef_b']/div")
+        elements = node.xpath(".//div[@class='def-body ddef_b']/div")
         for element in elements:
             html_class = element.get('class')
             if 'examp' in html_class:
@@ -180,7 +180,6 @@ class Parser:
             text_nodes = element.xpath("a/span")
             text = self.get_text(text_nodes[0]) if len(text_nodes) > 0 else ''
             extra = self.get_text(text_nodes[1]) if len(text_nodes) > 1 else ''
-            print("related_word: %s" % text)
 
             related_words.append(Ref(text, extra))
 

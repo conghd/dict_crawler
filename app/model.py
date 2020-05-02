@@ -109,6 +109,7 @@ class Word(Base):
         self.compares = ''
         self.word_family = ''
         self.pronun_audio_url = ''
+        self.audio_filename = ''
 
     def generate_line(self):
         return "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % (
@@ -123,6 +124,6 @@ class Word(Base):
             self.opposites,
             self.compares,
             self.word_family,
-            self.pronun_audio_url
+            self.audio_filename
             )
 
