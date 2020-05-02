@@ -31,14 +31,6 @@ def get_thing_information(database_url):
 
     return entries
 
-def sequence_through_audios(audios):
-    for audio in audios:
-        if audio['number_of_audio_files'] > 0:
-            continue
-        else:
-            upload_file_to_server(audio['thing_id'], audio['column_number_of_audio'], course_database_url, audio['audio_filename'])
-            print(audio['word'] + ' succeeded')
-
 def count_pages(database_url):
     raw_content = requests.get(database_url, cookies=cookies).content
     root = html.fromstring(raw_content)
